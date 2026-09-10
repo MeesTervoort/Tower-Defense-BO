@@ -2,13 +2,18 @@ using UnityEngine;
 
 public class TowerSelectionUI : MonoBehaviour
 {
-    void Start()
+    public static GameObject SelectedTowerPrefab;
+    
+    public void SelectTower(GameObject towerPrefab)
     {
-        
-    }
-
-    void Update()
-    {
+        if (SelectedTowerPrefab == towerPrefab)
+        {
+            SelectedTowerPrefab = null;
+        }
+        else
+        {
+            SelectedTowerPrefab = towerPrefab;
+        }
         
     }
 }
