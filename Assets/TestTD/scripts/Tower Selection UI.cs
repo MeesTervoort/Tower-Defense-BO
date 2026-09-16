@@ -9,6 +9,7 @@ public class TowerSelectionUI : MonoBehaviour
         if (SelectedTowerPrefab == towerPrefab)
         {
             SelectedTowerPrefab = null;
+            return;
         }
         else
         {
