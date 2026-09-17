@@ -16,18 +16,16 @@ public class TowerPlacer : MonoBehaviour
     {
        HandlePlacementHover();
        HandlePlacementClick();
-
-
     }
+
     void HandlePlacementHover()
     {
         if (TowerSelectionUI.SelectedTowerPrefab == null)
         {
-            if (GhostPrefab != null)
-            {
-                Destroy(GhostPrefab);
-            }
+            if (GhostPrefab != null) { }
+            Destroy(GhostInstance);
             return;
+        }
 
             if (GhostPrefab == null)
                 GhostInstance = Instantiate(GhostPrefab);
@@ -37,12 +35,17 @@ public class TowerPlacer : MonoBehaviour
             Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mouseWorldPos.z = 0;
 
+            Vector3Int CellPos = PlacementMap.WorldToCell(mouseWorldPos);
+
+            Vector3 worldCenter = PlacementMap.GetCellCenterWorld(CellPos);
+            worldCenter.z = 0;
+
             GhostInstance.transform.position = mouseWorldPos = new Vector3(0, PlacementMap.cellSize.y * 0.25f);
 
-            bool valid = PlacementMap.HasTile(CellPos) && (OccupiedTiles.Contains(CellPos);
+            bool valid = PlacementMap.HasTile(CellPos) && (OccupiedTiles.Contains(CellPos));
 
             GhostInstance.GetComponent<GhostTower>().SetValid(valid);
-        }
+        
     }
     void HandlePlacementClick()
     {
@@ -54,5 +57,16 @@ public class TowerPlacer : MonoBehaviour
 
         Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mouseWorldPos.z = 0;
+
+        Vector3Int CellPos = PlacementMap.WorldToCell(mouseWorldPos);
+
+        if(!PlacementMap.HasTile(CellPos))return;
+        if(OccupiedTiles.Contains(CellPos)) return;
+
+        Instantiate(TowerSelectionUI.SelectedTowerPrefab,GhostInstance.transform.position, Quaternion.identity);
+
+        TowerSelectionUI.SelectedTowerPrefab = null;
+
+        OccupiedTiles.Add(CellPos);
     }
 }
