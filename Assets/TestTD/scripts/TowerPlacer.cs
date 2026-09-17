@@ -21,9 +21,9 @@ public class TowerPlacer : MonoBehaviour
     }
     void HandlePlacementHover()
     {
-        if(TowerSelectionUI.SelectedTowerPrefab == null)
+        if (TowerSelectionUI.SelectedTowerPrefab == null)
         {
-            if(GhostPrefab != null)
+            if (GhostPrefab != null)
             {
                 Destroy(GhostPrefab);
             }
@@ -36,10 +36,23 @@ public class TowerPlacer : MonoBehaviour
 
             Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mouseWorldPos.z = 0;
+
+            GhostInstance.transform.position = mouseWorldPos = new Vector3(0, PlacementMap.cellSize.y * 0.25f);
+
+            bool valid = PlacementMap.HasTile(CellPos) && (OccupiedTiles.Contains(CellPos);
+
+            GhostInstance.GetComponent<GhostTower>().SetValid(valid);
         }
     }
     void HandlePlacementClick()
     {
+        if (!Input.GetMouseButtonDown(0)) return;
+        if(TowerSelectionUI.SelectedTowerPrefab == null) return;
 
+        if(EventSystem.current != null && EventSystem.current.IsPointerOverGameObject()) 
+            return;
+
+        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mouseWorldPos.z = 0;
     }
 }
