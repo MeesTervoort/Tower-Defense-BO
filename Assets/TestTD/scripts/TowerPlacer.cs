@@ -12,7 +12,7 @@ public class TowerPlacer : MonoBehaviour
     private HashSet<Vector3Int> OccupiedTiles = new HashSet<Vector3Int>();
     private GameObject GhostInstance;
 
-    void Update()
+    void OnUpdate()
     {
        HandlePlacementHover();
        HandlePlacementClick();
@@ -22,14 +22,15 @@ public class TowerPlacer : MonoBehaviour
     {
         if (TowerSelectionUI.SelectedTowerPrefab == null)
         {
-            if (GhostPrefab != null) { }
-            Destroy(GhostInstance);
+            if (GhostPrefab != null)
+                Destroy(GhostInstance); 
             return;
         }
 
-            if (GhostPrefab == null)
+            if (GhostPrefab != null)
                 GhostInstance = Instantiate(GhostPrefab);
 
+            Debug.Log(GhostPrefab);
             GhostInstance.GetComponent<SpriteRenderer>().sprite = TowerSelectionUI.SelectedTowerPrefab.GetComponent<SpriteRenderer>().sprite;
 
             Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);

@@ -6,15 +6,12 @@ public class TowerSelectionUI : MonoBehaviour
     
     public void SelectTower(GameObject towerPrefab)
     {
-        if (SelectedTowerPrefab == towerPrefab)
+        if (towerPrefab == SelectedTowerPrefab)
         {
             SelectedTowerPrefab = null;
             return;
         }
-        else
-        {
-            SelectedTowerPrefab = towerPrefab;
-        }
         
+        SelectedTowerPrefab = towerPrefab;
     }
 }
